@@ -1,9 +1,9 @@
-package janstenpickle.vault.core
+package anselmer.vault.core
 
 import com.ning.http.client.Response
-import janstenpickle.scala.syntax.request._
-import janstenpickle.scala.syntax.response._
-import janstenpickle.scala.syntax.vaultconfig._
+import anselmer.scala.syntax.request._
+import anselmer.scala.syntax.response._
+import anselmer.scala.syntax.vaultconfig._
 import uscala.concurrent.result.AsyncResult
 import uscala.result.Result
 

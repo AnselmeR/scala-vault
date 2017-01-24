@@ -1,4 +1,4 @@
-package janstenpickle.scala.syntax
+package anselmer.scala.syntax
 
 import cats.data.Xor
 import com.ning.http.client.Response
@@ -6,7 +6,7 @@ import dispatch.{Http, Req}
 import io.circe._
 import io.circe.parser._
 import io.circe.syntax._
-import janstenpickle.vault.core.VaultConfig
+import anselmer.vault.core.VaultConfig
 import uscala.concurrent.result.AsyncResult
 import uscala.result.Result
 import uscala.result.Result.{Fail, Ok}

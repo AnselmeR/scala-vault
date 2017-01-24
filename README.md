@@ -1,5 +1,5 @@
 # Vault Scala Library
-[![Circle CI](https://circleci.com/gh/janstenpickle/scala-vault.svg?style=svg)](https://circleci.com/gh/janstenpickle/scala-vault)
+[![Circle CI](https://circleci.com/gh/anselmer/scala-vault.svg?style=svg)](https://circleci.com/gh/anselmer/scala-vault)
 
 Scala library for working with [Hashicorp Vault](https://www.vaultproject.io/).
 
@@ -7,9 +7,9 @@ This library has three modules:
 
 |Name|Description|Download|
 |---|---|---|
-|**Core** | Basic client capable of obtaining a token using an App ID, supports getting and setting of secrets  | [![Download](https://api.bintray.com/packages/janstenpickle/maven/vault-core/images/download.svg)](https://bintray.com/janstenpickle/maven/vault-core/_latestVersion) |
-| **Auth** | Functions to authenticate a user using userpass authentication and token verification | [![Download](https://api.bintray.com/packages/janstenpickle/maven/vault-auth/images/download.svg)](https://bintray.com/janstenpickle/maven/vault-auth/_latestVersion)|
-| **Manage** | Functions for managing auth modules, mounts and policies | [![Download](https://api.bintray.com/packages/janstenpickle/maven/vault-manage/images/download.svg)](https://bintray.com/janstenpickle/maven/vault-manage/_latestVersion) |
+|**Core** | Basic client capable of obtaining a token using an App ID, supports getting and setting of secrets  | [![Download](https://api.bintray.com/packages/anselmer/maven/vault-core/images/download.svg)](https://bintray.com/anselmer/maven/vault-core/_latestVersion) |
+| **Auth** | Functions to authenticate a user using userpass authentication and token verification | [![Download](https://api.bintray.com/packages/anselmer/maven/vault-auth/images/download.svg)](https://bintray.com/anselmer/maven/vault-auth/_latestVersion)|
+| **Manage** | Functions for managing auth modules, mounts and policies | [![Download](https://api.bintray.com/packages/anselmer/maven/vault-manage/images/download.svg)](https://bintray.com/anselmer/maven/vault-manage/_latestVersion) |
 
 ## Install with SBT
 Add the following to your sbt `project/plugins.sbt` file:
@@ -18,19 +18,19 @@ addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
 ```
 Then add the following to your `build.sbt`
 ```scala
-resolvers += Resolver.bintrayRepo("janstenpickle", "maven")
-libraryDependencies += "janstenpickle.vault" %% "vault-core" % "0.3.1"
-libraryDependencies += "janstenpickle.vault" %% "vault-auth" % "0.3.1"
-libraryDependencies += "janstenpickle.vault" %% "vault-manage" % "0.3.1"
+resolvers += Resolver.bintrayRepo("anselmer", "maven")
+libraryDependencies += "anselmer.vault" %% "vault-core" % "0.3.1"
+libraryDependencies += "anselmer.vault" %% "vault-auth" % "0.3.1"
+libraryDependencies += "anselmer.vault" %% "vault-manage" % "0.3.1"
 ```
 ## Usage
 Simple setup:
 ```scala
 import java.net.URL
 
-import janstenpickle.vault.core.AppId
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.core.WSClient
+import anselmer.vault.core.AppId
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.core.WSClient
 
 val config = VaultConfig(WSClient(new URL("https://localhost:8200")), "token")
 
@@ -46,10 +46,10 @@ All responses from Vault are wrapped in an asynchronous [Result](http://github.c
 ```scala
 import java.net.URL
 
-import janstenpickle.vault.core.AppId
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.core.WSClient
-import janstenpickle.vault.core.Secrets
+import anselmer.vault.core.AppId
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.core.WSClient
+import anselmer.vault.core.Secrets
 
 
 val config = VaultConfig(WSClient(new URL("https://localhost:8200")), AppId("appId", "userId"))
@@ -87,8 +87,8 @@ val response = secrets.list
 ```scala
 import java.net.URL
 
-import janstenpickle.vault.core.WSClient
-import janstenpickle.vault.auth.UserPass
+import anselmer.vault.core.WSClient
+import anselmer.vault.auth.UserPass
 
 
 val userPass = UserPass(WSClient(new URL("https://localhost:8200")))
@@ -96,7 +96,7 @@ val userPass = UserPass(WSClient(new URL("https://localhost:8200")))
 val ttl = 10 * 60
 val response = userPass.authenticate("username", "password", ttl)
 ```
-The [response](auth/src/main/scala/janstenpickle/vault/auth/UserPass.scala#L23:L27) will contain the fields as per the [Vault documentation](https://www.vaultproject.io/docs/auth/userpass.html).
+The [response](auth/src/main/scala/anselmer/vault/auth/UserPass.scala#L23:L27) will contain the fields as per the [Vault documentation](https://www.vaultproject.io/docs/auth/userpass.html).
 
 #### Multitenant username/password auth
 This requires that `userpass` authentication has been enabled on separate path to the default of `userpass`. Instructions of how to do this are documented below. By doing this credientials for different tenants may be stored separately within Vault.
@@ -108,10 +108,10 @@ val response = userPass.authenticate("username", "password", ttl, "clientId")
 ```scala
 import java.net.URL
 
-import janstenpickle.vault.core.AppId
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.core.WSClient
-import janstenpickle.vault.auth.Token
+import anselmer.vault.core.AppId
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.core.WSClient
+import anselmer.vault.auth.Token
 
 
 val config = VaultConfig(WSClient(new URL("https://localhost:8200")), AppId("appId", "userId"))
@@ -120,7 +120,7 @@ val token = Token(config)
 
 val response = token.validate("some_vault_token")
 ```
-The [response](auth/src/main/scala/janstenpickle/vault/auth/Token.scala#L22-L30) will contain the fields as per the lookup response in the [Vault documentation](https://www.vaultproject.io/docs/auth/token.html)
+The [response](auth/src/main/scala/anselmer/vault/auth/Token.scala#L22-L30) will contain the fields as per the lookup response in the [Vault documentation](https://www.vaultproject.io/docs/auth/token.html)
 
 The token response will also have optional `username` and `client` values which are provided as best effort. If the token was obtained by using `userpass` authentication then they will be present. The `client` value will first look in the metadata for a client key and fallback to a section of the `path` value, whereas the `username` value will just look in the metadata.
 
@@ -130,10 +130,10 @@ This library also provides some limited management functionality for Vault aroun
 ```scala
 import java.net.URL
 
-import janstenpickle.vault.core.AppId
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.core.WSClient
-import janstenpickle.vault.manage.Auth
+import anselmer.vault.core.AppId
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.core.WSClient
+import anselmer.vault.manage.Auth
 
 
 val config = VaultConfig(WSClient(new URL("https://localhost:8200")), AppId("appId", "userId"))
@@ -169,8 +169,8 @@ The exmaples below show how clients can be set up, users authenticated and token
 
 #### Client Administration
 ```scala
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.manage.Auth
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.manage.Auth
 
 class ClientAuth(config: VaultConfig) {
   val auth = Auth(config)
@@ -180,8 +180,8 @@ class ClientAuth(config: VaultConfig) {
 ```
 #### User Administration
 ```scala
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.manage.UserPass
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.manage.UserPass
 
 class UserAdmin(config: VaultConfig, ttl: Int) {
   val userPass = UserPass(config)
@@ -196,8 +196,8 @@ class UserAdmin(config: VaultConfig, ttl: Int) {
 ```
 #### User Authentication
 ```scala
-import janstenpickle.vault.core.WSClient
-import janstenpickle.vault.manage.Auth
+import anselmer.vault.core.WSClient
+import anselmer.vault.manage.Auth
 
 class UserAuth(wsClient: WSClient, ttl: Int) {
   val userPass = UserPass(wsClient)
@@ -209,8 +209,8 @@ class UserAuth(wsClient: WSClient, ttl: Int) {
 ```
 #### Token Validation
 ```scala
-import janstenpickle.vault.core.VaultConfig
-import janstenpickle.vault.manage.Auth
+import anselmer.vault.core.VaultConfig
+import anselmer.vault.manage.Auth
 
 case class ValidationRepsonse(username: String, clientId: String, policies: Option[List[String]])
 
